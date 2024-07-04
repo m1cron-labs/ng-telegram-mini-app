@@ -1,27 +1,46 @@
-# NgTelegramWorkspace
+# Telegram Mini App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.3.
+This Angular library provides a set of tools to create Telegram WebApps with ease. It wraps the Telegram WebApp API in a convenient Angular service to streamline the development of your Telegram WebApp. For more information on Telegram Web Apps, please visit the [official documentation](https://core.telegram.org/bots/webapps).
 
-## Development server
+## Prerequisites
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Before using this library, you need to include the Telegram WebApp JavaScript API in your project. Add the following script tag to the `head` section of your `index.html` file:
 
-## Code scaffolding
+```html
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Installation
 
-## Build
+Install the library using npm:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm i --save @m1cron-labs/ng-telegram-mini-app
+```
 
-## Running unit tests
+## Usage
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```typescript
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TelegramWebApp } from '@m1cron-labs/ng-telegram-mini-app';
 
-## Running end-to-end tests
+@Component({
+  selector: 'app-root',
+  template: `<!-- Your template here -->`
+})
+export class AppComponent implements OnInit, OnDestroy {
+  private readonly telegram = inject(TelegramWebApp);
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+  constructor() {
+    this.telegram.ready();
+  }
 
-## Further help
+  ngOnInit() {
+    console.debug('Telegram Web App is ready', this.telegram.initDataUnsafe);
+  }
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+  ngOnDestroy(): void {
+    this.telegram.close();
+  }
+}
+```
