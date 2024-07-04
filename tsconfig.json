@@ -10,6 +10,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
+    "paths": {
+      "ng-telegram-mini-app": [
+        "./dist/ng-telegram-mini-app"
+      ]
+    },
     "esModuleInterop": true,
     "sourceMap": true,
     "declaration": false,

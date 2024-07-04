@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "build:ng-telegram-mini-app": "ng build ng-telegram-mini-app",
+    "watch:ng-telegram-mini-app": "ng build ng-telegram-mini-app --watch --configuration dev",
+    "test": "ng test",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -23,15 +24,20 @@
     "zone.js": "~0.14.3"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "^18.0.7",
     "@angular/cli": "^18.0.3",
     "@angular/compiler-cli": "^18.0.0",
     "@types/jasmine": "~5.1.0",
+    "angular-eslint": "18.1.0",
+    "eslint": "^9.6.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.4.2"
+    "ng-packagr": "^18.0.0",
+    "typescript": "~5.4.2",
+    "typescript-eslint": "8.0.0-alpha.38"
   }
 }

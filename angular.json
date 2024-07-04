@@ -3,5 +3,53 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "ng-telegram-mini-app": {
+      "projectType": "library",
+      "root": "projects/ng-telegram-mini-app",
+      "sourceRoot": "projects/ng-telegram-mini-app/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ng-telegram-mini-app/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-telegram-mini-app/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ng-telegram-mini-app/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ng-telegram-mini-app/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ng-telegram-mini-app/**/*.ts",
+              "projects/ng-telegram-mini-app/**/*.html"
+            ],
+            "eslintConfig": "projects/ng-telegram-mini-app/eslint.config.js"
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }
