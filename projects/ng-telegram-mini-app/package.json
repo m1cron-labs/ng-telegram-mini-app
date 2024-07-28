@@ -1,6 +1,6 @@
 {
   "name": "@m1cron-labs/ng-telegram-mini-app",
-  "version": "7.6.1",
+  "version": "7.7.0",
   "license": "MIT",
   "repository": "m1cron-labs/ng-telegram-mini-app",
   "peerDependencies": {

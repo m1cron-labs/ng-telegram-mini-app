@@ -1,8 +1,8 @@
 export type WebAppEventType =
-  /**
-   * Occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
-   * eventHandler receives no parameters, new theme settings and color scheme can be received via this.themeParams and this.colorScheme respectively.
-   */
+/**
+ * Occurs whenever theme settings are changed in the user's Telegram app (including switching to night mode).
+ * eventHandler receives no parameters, new theme settings and color scheme can be received via this.themeParams and this.colorScheme respectively.
+ */
   | 'themeChanged'
 
   /**
@@ -50,6 +50,12 @@ export type WebAppEventType =
    * eventHandler receives an object with the single field data containing text data from the QR code.
    */
   | 'qrTextReceived'
+
+  /**
+   * Bot API 7.7+ Occurs when the QR code scanner popup is closed by the user.
+   * eventHandler receives no parameters.
+   */
+  | 'scanQrPopupClosed'
 
   /**
    * Bot API 6.4+ Occurrs when the readTextFromClipboard method is called.

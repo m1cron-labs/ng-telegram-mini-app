@@ -154,13 +154,13 @@ export interface WebApp {
   disableClosingConfirmation: () => void;
 
   /**
-   * Bot API 7.6+
+   * Bot API 7.7+
    * A method that enables vertical swipes in the Mini App. This allows the user to scroll the Mini App vertically.
    */
   enableVerticalSwipes: () => void;
 
   /**
-   * Bot API 7.6+
+   * Bot API 7.7+
    * A method that disables vertical swipes in the Mini App. This prevents the user from scrolling the Mini App vertically.
    */
   disableVerticalSwipes: () => void;
