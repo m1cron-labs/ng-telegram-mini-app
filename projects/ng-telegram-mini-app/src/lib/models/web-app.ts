@@ -8,6 +8,7 @@ import { WebAppEventType } from './enums/web-app.event.type';
 import { HapticFeedback } from './haptic-feedback';
 import { PopupParams } from './params/popup.params';
 import { ScanQrPopupParams } from './params/scan-qr.popup.params';
+import { StoryShareParams } from './params/story-share.params';
 import { ThemeParams } from './params/theme.params';
 import { Message } from './telegram/message';
 import { WebAppInitData } from './web-app.init-data';
@@ -225,6 +226,14 @@ export interface WebApp {
    * @param callback
    */
   openInvoice: (url: string, callback?: Function) => void;
+
+  /**
+   * Bot API 7.8+
+   * A method that opens the native story editor with the media specified in the media_url parameter as an HTTPS URL. An optional params argument of the type StoryShareParams describes additional sharing settings.
+   * @param media_url
+   * @param params
+   */
+  shareToStory: (media_url: string, params?: StoryShareParams) => void;
 
   /**
    * Bot API 6.2+
