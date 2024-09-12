@@ -74,7 +74,7 @@ export * from './lib/models/params/scan-qr.popup.params';
 export * from './lib/models/enums/button.type';
 export * from './lib/models/buttons/popup.button';
 export * from './lib/models/buttons/back.button';
-export * from './lib/models/buttons/bottomButton';
+export * from './lib/models/buttons/bottom.button';
 export * from './lib/models/buttons/settings.button';
 export * from './lib/models/enums/notification.type';
 export * from './lib/models/haptic-feedback';

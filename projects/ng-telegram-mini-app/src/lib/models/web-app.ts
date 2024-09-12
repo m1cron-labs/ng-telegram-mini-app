@@ -1,6 +1,6 @@
 import { BiometricManager } from './biometric.manager';
 import { BackButton } from './buttons/back.button';
-import { BottomButton } from './buttons/bottomButton';
+import { BottomButton } from './buttons/bottom.button';
 import { SettingsButton } from './buttons/settings.button';
 import { CloudStorage } from './cloud-storage';
 import { FollowingType } from './enums/following.type';
