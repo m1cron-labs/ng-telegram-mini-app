@@ -1,6 +1,6 @@
 import { BiometricManager } from './biometric.manager';
 import { BackButton } from './buttons/back.button';
-import { MainButton } from './buttons/main.button';
+import { BottomButton } from './buttons/bottomButton';
 import { SettingsButton } from './buttons/settings.button';
 import { CloudStorage } from './cloud-storage';
 import { FollowingType } from './enums/following.type';
@@ -81,6 +81,11 @@ export interface WebApp {
   backgroundColor: string;
 
   /**
+   * Current bottom bar color in the #RRGGBB format.
+   */
+  bottomBarColor: string;
+
+  /**
    * True, if the confirmation dialog is enabled while the user is trying to close the Mini App. False, if the confirmation dialog is disabled.
    */
   isClosingConfirmationEnabled: boolean;
@@ -98,7 +103,12 @@ export interface WebApp {
   /**
    * An object for controlling the main button, which is displayed at the bottom of the Mini App in the Telegram interface.
    */
-  MainButton: MainButton;
+  MainButton: BottomButton;
+
+  /**
+   * An object for controlling the secondary button, which is displayed at the bottom of the Mini App in the Telegram interface.
+   */
+  SecondaryButton: BottomButton;
 
   /**
    * An object for controlling the Settings item in the context menu of the Mini App in the Telegram interface.
@@ -141,6 +151,13 @@ export interface WebApp {
    * @param color
    */
   setBackgroundColor: (color: string) => void;
+
+  /**
+   * Bot API 7.10+
+   * A method that sets the app's bottom bar color in the #RRGGBB format. You can also use the keywords bg_color, secondary_bg_color and bottom_bar_bg_color.
+   * @param color
+   */
+  setBottomBarColor: (color: string) => void;
 
   /**
    *  Bot API 6.2+

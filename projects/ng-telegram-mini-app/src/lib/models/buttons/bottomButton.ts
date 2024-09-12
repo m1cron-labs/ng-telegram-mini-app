@@ -1,7 +1,7 @@
 /**
- * This object controls the main button, which is displayed at the bottom of the Mini App in the Telegram interface.
+ * This object controls the button that is displayed at the bottom of the Mini App in the Telegram interface.
  */
-export interface MainButton {
+export interface BottomButton {
   /**
    * Current button text. Set to CONTINUE by default.
    */
@@ -36,52 +36,52 @@ export interface MainButton {
    * A method to set the button text.
    * @param text
    */
-  setText: (text: string) => MainButton;
+  setText: (text: string) => BottomButton;
 
   /**
    * A method that sets the button press event handler. An alias for Telegram.WebApp.onEvent('mainButtonClicked', callback)
    * @param callback
    */
-  onClick: (callback: Function) => MainButton;
+  onClick: (callback: Function) => BottomButton;
 
   /**
    * A method that removes the button press event handler. An alias for Telegram.WebApp.offEvent('mainButtonClicked', callback)
    * @param callback
    */
-  offClick: (callback: Function) => MainButton;
+  offClick: (callback: Function) => BottomButton;
 
   /**
    * A method to make the button visible.
    * Note that opening the Mini App from the attachment menu hides the main button until the user interacts with the Mini App interface.
    */
-  show: () => MainButton;
+  show: () => BottomButton;
 
   /**
    * A method to hide the button.
    */
-  hide: () => MainButton;
+  hide: () => BottomButton;
 
   /**
    * A method to enable the button.
    */
-  enable: () => MainButton;
+  enable: () => BottomButton;
 
   /**
    * A method to disable the button.
    */
-  disable: () => MainButton;
+  disable: () => BottomButton;
 
   /**
    * A method to show a loading indicator on the button.
    * It is recommended to display loading progress if the action tied to the button may take a long time. By default, the button is disabled while the action is in progress. If the parameter leaveActive=true is passed, the button remains enabled.
    * @param leaveActive
    */
-  showProgress: (leaveActive: number) => MainButton;
+  showProgress: (leaveActive: number) => BottomButton;
 
   /**
    * A method to hide the loading indicator.
    */
-  hideProgress: () => MainButton;
+  hideProgress: () => BottomButton;
 
   /**
    * A method to set the button parameters. The params parameter is an object containing one or several fields that need to be changed:
@@ -100,5 +100,5 @@ export interface MainButton {
       is_active: boolean;
       is_visible: boolean;
     }>,
-  ) => MainButton;
+  ) => BottomButton;
 }
