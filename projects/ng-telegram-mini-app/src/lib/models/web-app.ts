@@ -1,15 +1,24 @@
+import { Accelerometer } from './accelerometer';
 import { BiometricManager } from './biometric.manager';
 import { BackButton } from './buttons/back.button';
 import { BottomButton } from './buttons/bottom.button';
 import { SettingsButton } from './buttons/settings.button';
 import { CloudStorage } from './cloud-storage';
+import { ContentSafeAreaInset } from './content-safe.area-inset';
+import { DeviceOrientation } from './device-orientation';
 import { FollowingType } from './enums/following.type';
+import { HomeScreenStatus } from './enums/home-screen.status';
 import { WebAppEventType } from './enums/web-app.event.type';
+import { Gyroscope } from './gyroscope';
 import { HapticFeedback } from './haptic-feedback';
+import { LocationManager } from './location.manager';
+import { DownloadFileParams } from './params/download-file.params';
+import { EmojiStatusParams } from './params/emoji-status.params';
 import { PopupParams } from './params/popup.params';
 import { ScanQrPopupParams } from './params/scan-qr.popup.params';
 import { StoryShareParams } from './params/story-share.params';
 import { ThemeParams } from './params/theme.params';
+import { SafeAreaInset } from './safe.area-inset';
 import { Message } from './telegram/message';
 import { WebAppInitData } from './web-app.init-data';
 
@@ -46,6 +55,12 @@ export interface WebApp {
    * An object containing the current theme settings used in the Telegram app.
    */
   themeParams: ThemeParams;
+
+  /**
+   * Bot API 8.0+
+   * True, if the Mini App is currently active. False, if the Mini App is minimized.
+   */
+  isActive: boolean;
 
   /**
    * True, if the Mini App is expanded to the maximum available height. False, if the Mini App occupies part of the screen and can be expanded to the full height using the expand() method.
@@ -96,6 +111,26 @@ export interface WebApp {
   isVerticalSwipesEnabled: boolean;
 
   /**
+   * True, if the Mini App is currently being displayed in fullscreen mode.
+   */
+  isFullscreen: boolean;
+
+  /**
+   * True, if the Mini App’s orientation is currently locked. False, if orientation changes freely based on the device’s rotation.
+   */
+  isOrientationLocked: boolean;
+
+  /**
+   * An object representing the device's safe area insets, accounting for system UI elements like notches or navigation bars.
+   */
+  safeAreaInset: SafeAreaInset;
+
+  /**
+   * An object representing the safe area for displaying content within the app, free from overlapping Telegram UI elements.
+   */
+  contentSafeAreaInset: ContentSafeAreaInset;
+
+  /**
    * An object for controlling the back button which can be displayed in the header of the Mini App in the Telegram interface.
    */
   BackButton: BackButton;
@@ -129,6 +164,26 @@ export interface WebApp {
    *  An object for controlling biometrics on the device.
    */
   BiometricManager: BiometricManager;
+
+  /**
+   * An object for accessing accelerometer data on the device.
+   */
+  Accelerometer: Accelerometer;
+
+  /**
+   * An object for accessing device orientation data on the device.
+   */
+  DeviceOrientation: DeviceOrientation;
+
+  /**
+   * An object for accessing gyroscope data on the device.
+   */
+  Gyroscope: Gyroscope;
+
+  /**
+   * An object for controlling location on the device.
+   */
+  LocationManager: LocationManager;
 
   /**
    * Returns true if the user's app supports a version of the Bot API that is equal to or higher than the version passed as the parameter.
@@ -182,6 +237,56 @@ export interface WebApp {
    * A method that disables vertical swipes in the Mini App. This prevents the user from scrolling the Mini App vertically.
    */
   disableVerticalSwipes: () => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that requests opening the Mini App in fullscreen mode.
+   * Although the header is transparent in fullscreen mode, it is recommended that the Mini App sets the header color using the setHeaderColor method.
+   * This color helps determine a contrasting color for the status bar and other UI controls.
+   */
+  requestFullscreen: () => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that requests exiting fullscreen mode.
+   */
+  exitFullscreen: () => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that locks the Mini App’s orientation to its current mode (either portrait or landscape).
+   * Once locked, the orientation remains fixed, regardless of device rotation.
+   * This is useful if a stable orientation is needed during specific interactions.
+   */
+  lockOrientation: () => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that unlocks the Mini App’s orientation, allowing it to follow the device's rotation freely.
+   * Use this to restore automatic orientation adjustments based on the device orientation.
+   */
+  unlockOrientation: () => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that prompts the user to add the Mini App to the home screen.
+   * After successfully adding the icon, the homeScreenAdded event will be triggered if supported by the device.
+   * Note that if the device cannot determine the installation status, the event may not be received even if the icon has been added.
+   */
+  addToHomeScreen: () => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that checks if adding to the home screen is supported and if the Mini App has already been added.
+   * If an optional callback parameter is provided, the callback function will be called with a single argument status, which is a string indicating the home screen status.
+   * Possible values for status are:
+   * - unsupported – the feature is not supported, and it is not possible to add the icon to the home screen,
+   * - unknown – the feature is supported, and the icon can be added, but it is not possible to determine if the icon has already been added,
+   * - added – the icon has already been added to the home screen,
+   * - missed – the icon has not been added to the home screen.
+   * @param callback
+   */
+  checkHomeScreenStatus: (callback?: (status: HomeScreenStatus) => void) => void;
 
   /**
    * A method that sets the app event handler. Check the list of available events.
@@ -251,6 +356,47 @@ export interface WebApp {
    * @param params
    */
   shareToStory: (media_url: string, params?: StoryShareParams) => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that opens a dialog allowing the user to share a message provided by the bot.
+   * If an optional callback parameter is provided, the callback function will be called with a boolean as the first argument, indicating whether the message was successfully sent.
+   * The message id passed to this method must belong to a PreparedInlineMessage previously obtained via the Bot API method savePreparedInlineMessage.
+   * @param msg_id
+   * @param callback
+   */
+  shareMessage: (msg_id: string, callback?: (response: boolean) => void) => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that opens a dialog allowing the user to set the specified custom emoji as their status.
+   * An optional params argument of type EmojiStatusParams specifies additional settings, such as duration.
+   * If an optional callback parameter is provided, the callback function will be called with a boolean as the first argument, indicating whether the status was set.
+   *
+   * Note: this method opens a native dialog and cannot be used to set the emoji status without manual user interaction.
+   * For fully programmatic changes, you should instead use the Bot API method setUserEmojiStatus after obtaining authorization to do so via the Mini App method requestEmojiStatusAccess.
+   * @param custom_emoji_id
+   * @param params
+   * @param callback
+   */
+  setEmojiStatus: (custom_emoji_id: string, params?: EmojiStatusParams, callback?: (response: boolean) => void) => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that shows a native popup requesting permission for the bot to manage user's emoji status.
+   * If an optional callback parameter was passed, the callback function will be called when the popup is closed and the first argument will be a boolean indicating whether the user granted this access.
+   * @param callback
+   */
+  requestEmojiStatusAccess: (callback?: (response: boolean) => void) => void;
+
+  /**
+   * Bot API 8.0+
+   * A method that displays a native popup prompting the user to download a file specified by the params argument of type DownloadFileParams.
+   * If an optional callback parameter is provided, the callback function will be called when the popup is closed, with the first argument as a boolean indicating whether the user accepted the download request.
+   * @param params
+   * @param callback
+   */
+  downloadFile: (params: DownloadFileParams, callback?: (response: boolean) => void) => void;
 
   /**
    * Bot API 6.2+

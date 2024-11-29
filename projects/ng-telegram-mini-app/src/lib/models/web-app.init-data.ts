@@ -67,4 +67,9 @@ export interface WebAppInitData {
    * A hash of all passed parameters, which the bot server can use to check their validity.
    */
   hash: string;
+
+  /**
+   * A signature of all passed parameters (except hash), which the third party can use to check their validity.
+   */
+  signature: string;
 }

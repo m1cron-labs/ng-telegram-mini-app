@@ -21,7 +21,7 @@ export type WebAppUser = Omit<
   allows_write_to_pm?: boolean;
 
   /**
-   * Optional. URL of the user’s profile photo. The photo can be in .jpeg or .svg formats. Only returned for Mini Apps launched from the attachment menu.
+   * Optional. URL of the user’s profile photo. The photo can be in .jpeg or .svg formats.
    */
   photo_url?: string;
 };
