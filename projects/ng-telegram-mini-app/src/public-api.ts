@@ -79,6 +79,8 @@ export * from './lib/models/buttons/settings.button';
 export * from './lib/models/enums/notification.type';
 export * from './lib/models/haptic-feedback';
 export * from './lib/models/cloud-storage';
+export * from './lib/models/device-storage';
+export * from './lib/models/secure-storage';
 export * from './lib/models/enums/biometric.type';
 export * from './lib/models/biometric.manager';
 export * from './lib/models/params/biometric.request-access.params';

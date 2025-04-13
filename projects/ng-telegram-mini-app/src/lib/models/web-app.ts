@@ -4,6 +4,8 @@ import { BackButton } from './buttons/back.button';
 import { BottomButton } from './buttons/bottom.button';
 import { SettingsButton } from './buttons/settings.button';
 import { CloudStorage } from './cloud-storage';
+import { DeviceStorage } from './device-storage';
+import { SecureStorage } from './secure-storage';
 import { ContentSafeAreaInset } from './content-safe.area-inset';
 import { DeviceOrientation } from './device-orientation';
 import { FollowingType } from './enums/following.type';
@@ -184,6 +186,16 @@ export interface WebApp {
    * An object for controlling location on the device.
    */
   LocationManager: LocationManager;
+
+  /**
+   * An object for storing and retrieving data from the device's local storage.
+   */
+  DeviceStorage: DeviceStorage;
+
+  /**
+   * An object for storing and retrieving data from the device's secure storage.
+   */
+  SecureStorage: SecureStorage;
 
   /**
    * Returns true if the user's app supports a version of the Bot API that is equal to or higher than the version passed as the parameter.
