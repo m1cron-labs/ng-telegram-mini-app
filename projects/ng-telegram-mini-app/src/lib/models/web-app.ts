@@ -411,6 +411,12 @@ export interface WebApp {
   downloadFile: (params: DownloadFileParams, callback?: (response: boolean) => void) => void;
 
   /**
+   * Bot API 9.1+
+   * A method that hides the on-screen keyboard, if it is currently visible. Does nothing if the keyboard is not active.
+   */
+  hideKeyboard: () => void;
+
+  /**
    * Bot API 6.2+
    * A method that shows a native popup described by the params argument of the type PopupParams. The Mini App will receive the event popupClosed when the popup is closed. If an optional callback parameter was passed, the callback function will be called and the field id of the pressed button will be passed as the first argument.
    * @param params
