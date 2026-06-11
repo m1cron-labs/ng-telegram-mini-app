@@ -1,7 +1,21 @@
+import { BottomButtonPosition } from '../enums/bottom-button.position';
+import { BottomButtonType } from '../enums/bottom-button.type';
+
 /**
  * This object controls the button that is displayed at the bottom of the Mini App in the Telegram interface.
  */
 export interface BottomButton {
+  /**
+   * Readonly. Type of the button. It can be either main for the main button or secondary for the secondary button.
+   */
+  readonly type: BottomButtonType;
+
+  /**
+   * Bot API 9.5+
+   * Unique identifier of the custom emoji shown before the text of the button.
+   */
+  iconCustomEmojiId: string;
+
   /**
    * Current button text. Set to CONTINUE by default.
    */
@@ -26,6 +40,19 @@ export interface BottomButton {
    * Shows whether the button is active. Set to true by default.
    */
   isActive: boolean;
+
+  /**
+   * Bot API 7.10+
+   * Shows whether the button has a shine effect. Set to false by default.
+   */
+  hasShineEffect: boolean;
+
+  /**
+   * Bot API 7.10+
+   * Position of the secondary button. Not defined for the main button. It applies only if both the main and secondary buttons are visible. Set to left by default.
+   * Supported values: left, right, top, bottom.
+   */
+  position: BottomButtonPosition;
 
   /**
    * Readonly. Shows whether the button is displaying a loading indicator.
@@ -85,18 +112,24 @@ export interface BottomButton {
 
   /**
    * A method to set the button parameters. The params parameter is an object containing one or several fields that need to be changed:
+   * icon_custom_emoji_id - Bot API 9.5+ button icon emoji id;
    * text - button text;
    * color - button color;
    * text_color - button text color;
+   * has_shine_effect - Bot API 7.10+ enable shine effect;
+   * position - position of the secondary button;
    * is_active - enable the button;
    * is_visible - show the button.
    * @param params
    */
   setParams: (
     params: Partial<{
+      icon_custom_emoji_id: string;
       text: string;
       color: string;
       text_color: string;
+      has_shine_effect: boolean;
+      position: BottomButtonPosition;
       is_active: boolean;
       is_visible: boolean;
     }>,

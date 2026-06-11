@@ -72,6 +72,8 @@ export * from './lib/models/params/theme.params';
 export * from './lib/models/params/popup.params';
 export * from './lib/models/params/scan-qr.popup.params';
 export * from './lib/models/enums/button.type';
+export * from './lib/models/enums/bottom-button.position';
+export * from './lib/models/enums/bottom-button.type';
 export * from './lib/models/buttons/popup.button';
 export * from './lib/models/buttons/back.button';
 export * from './lib/models/buttons/bottom.button';

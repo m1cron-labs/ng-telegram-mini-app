@@ -478,6 +478,14 @@ export interface WebApp {
   requestContact: (callback?: Function) => void;
 
   /**
+   * Bot API 9.6+
+   * A method that opens a dialog allowing the user to select an existing chat or create a new one. If an optional callback parameter is provided, the callback function will be called with a boolean as the first argument, indicating whether the message was successfully sent. The request id passed to this method must belong to a PreparedKeyboardButton previously obtained via the Bot API method savePreparedKeyboardButton.
+   * @param req_id
+   * @param callback
+   */
+  requestChat: (req_id: string, callback?: (response: boolean) => void) => void;
+
+  /**
    * A method that informs the Telegram app that the Mini App is ready to be displayed.
    * It is recommended to call this method as early as possible, as soon as all essential interface elements are loaded. Once this method is called, the loading placeholder is hidden and the Mini App is shown.
    * If the method is not called, the placeholder will be hidden only when the page is fully loaded.
