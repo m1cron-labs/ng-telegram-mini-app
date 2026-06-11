@@ -21,7 +21,7 @@ import { ScanQrPopupParams } from './params/scan-qr.popup.params';
 import { StoryShareParams } from './params/story-share.params';
 import { ThemeParams } from './params/theme.params';
 import { SafeAreaInset } from './safe.area-inset';
-import { Message } from './telegram/message';
+import { InvoiceStatus, WebAppEventHandler } from './web-app.event-data';
 import { WebAppInitData } from './web-app.init-data';
 
 export interface WebApp {
@@ -298,21 +298,22 @@ export interface WebApp {
    * - missed – the icon has not been added to the home screen.
    * @param callback
    */
-  checkHomeScreenStatus: (callback?: (status: HomeScreenStatus) => void) => void;
+  checkHomeScreenStatus: (callback?: (status: `${HomeScreenStatus}`) => void) => void;
 
   /**
    * A method that sets the app event handler. Check the list of available events.
+   * The handler signature is inferred from the event type (see WebAppEventDataMap).
    * @param eventType
    * @param eventHandler
    */
-  onEvent: (eventType: WebAppEventType, eventHandler: Function) => void;
+  onEvent: <T extends WebAppEventType>(eventType: T, eventHandler: WebAppEventHandler<T> | Function) => void;
 
   /**
    *  A method that deletes a previously set event handler.
    * @param eventType
    * @param eventHandler
    */
-  offEvent: (eventType: WebAppEventType, eventHandler: Function) => void;
+  offEvent: <T extends WebAppEventType>(eventType: T, eventHandler: WebAppEventHandler<T> | Function) => void;
 
   /**
    * A method used to send data to the bot. When this method is called, a service message is sent to the bot containing the data data of the length up to 4096 bytes, and the Mini App is closed. See the field web_app_data in the class Message.
@@ -320,7 +321,7 @@ export interface WebApp {
    * This method is only available for Mini Apps launched via a Keyboard button.
    * @param data
    */
-  sendData: (data: Message) => void;
+  sendData: (data: string) => void;
 
   /**
    * Bot API 6.7+
@@ -332,7 +333,7 @@ export interface WebApp {
    * @param query
    * @param choose_chat_types
    */
-  switchInlineQuery: (query: string, choose_chat_types?: FollowingType) => void;
+  switchInlineQuery: (query: string, choose_chat_types?: `${FollowingType}`[]) => void;
 
   /**
    * A method that opens a link in an external browser. The Mini App will not be closed.
@@ -343,7 +344,7 @@ export interface WebApp {
    * @param url
    * @param options
    */
-  openLink: (url: string, options?: any) => void; // TODO: Instant View
+  openLink: (url: string, options?: { try_instant_view?: boolean }) => void;
 
   /**
    * A method that opens a telegram link inside the Telegram app. The Mini App will not be closed after this method is called.
@@ -359,7 +360,7 @@ export interface WebApp {
    * @param url
    * @param callback
    */
-  openInvoice: (url: string, callback?: Function) => void;
+  openInvoice: (url: string, callback?: ((status: InvoiceStatus) => void) | Function) => void;
 
   /**
    * Bot API 7.8+
@@ -422,7 +423,7 @@ export interface WebApp {
    * @param params
    * @param callback
    */
-  showPopup: (params: PopupParams, callback?: Function) => void;
+  showPopup: (params: PopupParams, callback?: ((button_id: string | null) => void) | Function) => void;
 
   /**
    * Bot API 6.2+
@@ -430,7 +431,7 @@ export interface WebApp {
    * @param message
    * @param callback
    */
-  showAlert: (message: string, callback?: Function) => void;
+  showAlert: (message: string, callback?: (() => void) | Function) => void;
 
   /**
    * Bot API 6.2+
@@ -438,7 +439,7 @@ export interface WebApp {
    * @param message
    * @param callback
    */
-  showConfirm: (message: string, callback?: Function) => void;
+  showConfirm: (message: string, callback?: ((confirmed: boolean) => void) | Function) => void;
 
   /**
    * Bot API 6.4+
@@ -446,7 +447,7 @@ export interface WebApp {
    * @param params
    * @param callback
    */
-  showScanQrPopup: (params: ScanQrPopupParams, callback?: Function) => void;
+  showScanQrPopup: (params: ScanQrPopupParams, callback?: ((data: string) => boolean | void) | Function) => void;
 
   /**
    * Bot API 6.4+
@@ -461,21 +462,21 @@ export interface WebApp {
    * Note: this method can be called only for Mini Apps launched from the attachment menu and only in response to a user interaction with the Mini App interface (e.g. a click inside the Mini App or on the main button).
    * @param callback
    */
-  readTextFromClipboard: (callback?: Function) => void;
+  readTextFromClipboard: (callback?: ((data: string | null) => void) | Function) => void;
 
   /**
    * Bot API 6.9+
    * A method that shows a native popup requesting permission for the bot to send messages to the user. If an optional callback parameter was passed, the callback function will be called when the popup is closed and the first argument will be a boolean indicating whether the user granted this access.
    * @param callback
    */
-  requestWriteAccess: (callback?: Function) => void;
+  requestWriteAccess: (callback?: ((granted: boolean) => void) | Function) => void;
 
   /**
    * Bot API 6.9+
    * A method that shows a native popup prompting the user for their phone number. If an optional callback parameter was passed, the callback function will be called when the popup is closed and the first argument will be a boolean indicating whether the user shared its phone number.
    * @param callback
    */
-  requestContact: (callback?: Function) => void;
+  requestContact: (callback?: ((shared: boolean) => void) | Function) => void;
 
   /**
    * Bot API 9.6+

@@ -16,7 +16,7 @@ export interface SecureStorage {
    * @param value
    * @param callback
    */
-  setItem: (key: string, value: string, callback?: Function) => SecureStorage;
+  setItem: (key: string, value: string, callback?: ((error: Error | null, stored?: boolean) => void) | Function) => SecureStorage;
 
   /**
    * Bot API 9.0+
@@ -27,7 +27,7 @@ export interface SecureStorage {
    * @param key
    * @param callback
    */
-  getItem: (key: string, callback: Function) => SecureStorage;
+  getItem: (key: string, callback: ((error: Error | null, value?: string | null, canBeRestored?: boolean) => void) | Function) => SecureStorage;
 
   /**
    * Bot API 9.0+
@@ -38,7 +38,7 @@ export interface SecureStorage {
    * @param key
    * @param callback
    */
-  restoreItem: (key: string, callback?: Function) => SecureStorage;
+  restoreItem: (key: string, callback?: ((error: Error | null, value?: string | null) => void) | Function) => SecureStorage;
 
   /**
    * Bot API 9.0+
@@ -49,7 +49,7 @@ export interface SecureStorage {
    * @param key
    * @param callback
    */
-  removeItem: (key: string, callback?: Function) => SecureStorage;
+  removeItem: (key: string, callback?: ((error: Error | null, removed?: boolean) => void) | Function) => SecureStorage;
 
   /**
    * Bot API 9.0+
@@ -59,5 +59,5 @@ export interface SecureStorage {
    * In case of success, the first argument will be null and the second argument will be a boolean indicating whether all values were removed.
    * @param callback
    */
-  clear: (callback?: Function) => SecureStorage;
+  clear: (callback?: ((error: Error | null, cleared?: boolean) => void) | Function) => SecureStorage;
 }

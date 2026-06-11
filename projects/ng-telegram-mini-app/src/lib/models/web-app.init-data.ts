@@ -39,7 +39,7 @@ export interface WebAppInitData {
    * Can be either “sender” for a private chat with the user opening the link, “private”, “group”, “supergroup”, or “channel”.
    * Returned only for Mini Apps launched from direct links.
    */
-  chat_type?: ChatFromType;
+  chat_type?: `${ChatFromType}`;
 
   /**
    * Optional. Global identifier, uniquely corresponding to the chat from which the Mini App was opened. Returned only for Mini Apps launched from a direct link.

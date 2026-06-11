@@ -8,7 +8,7 @@ export interface BottomButton {
   /**
    * Readonly. Type of the button. It can be either main for the main button or secondary for the secondary button.
    */
-  readonly type: BottomButtonType;
+  readonly type: `${BottomButtonType}`;
 
   /**
    * Bot API 9.5+
@@ -52,7 +52,7 @@ export interface BottomButton {
    * Position of the secondary button. Not defined for the main button. It applies only if both the main and secondary buttons are visible. Set to left by default.
    * Supported values: left, right, top, bottom.
    */
-  position: BottomButtonPosition;
+  position: `${BottomButtonPosition}`;
 
   /**
    * Readonly. Shows whether the button is displaying a loading indicator.
@@ -69,13 +69,13 @@ export interface BottomButton {
    * A method that sets the button press event handler. An alias for Telegram.WebApp.onEvent('mainButtonClicked', callback)
    * @param callback
    */
-  onClick: (callback: Function) => BottomButton;
+  onClick: (callback: (() => void) | Function) => BottomButton;
 
   /**
    * A method that removes the button press event handler. An alias for Telegram.WebApp.offEvent('mainButtonClicked', callback)
    * @param callback
    */
-  offClick: (callback: Function) => BottomButton;
+  offClick: (callback: (() => void) | Function) => BottomButton;
 
   /**
    * A method to make the button visible.
@@ -101,9 +101,9 @@ export interface BottomButton {
   /**
    * A method to show a loading indicator on the button.
    * It is recommended to display loading progress if the action tied to the button may take a long time. By default, the button is disabled while the action is in progress. If the parameter leaveActive=true is passed, the button remains enabled.
-   * @param leaveActive
+   * @param leaveActive boolean preferred; number is accepted for backward compatibility (evaluated by truthiness)
    */
-  showProgress: (leaveActive: number) => BottomButton;
+  showProgress: (leaveActive?: boolean | number) => BottomButton;
 
   /**
    * A method to hide the loading indicator.
@@ -129,7 +129,7 @@ export interface BottomButton {
       color: string;
       text_color: string;
       has_shine_effect: boolean;
-      position: BottomButtonPosition;
+      position: `${BottomButtonPosition}`;
       is_active: boolean;
       is_visible: boolean;
     }>,

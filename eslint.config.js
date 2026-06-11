@@ -14,6 +14,8 @@ module.exports = tseslint.config(
     ],
     processor: angular.processInlineTemplates,
     rules: {
+      "@typescript-eslint/no-unsafe-function-type": "off",
+      "@typescript-eslint/no-empty-object-type": ["error", { "allowInterfaces": "always" }],
       "@angular-eslint/directive-selector": [
         "error",
         {

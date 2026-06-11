@@ -4,5 +4,6 @@ export interface Utils {
   urlParseHashParams: (locationHash: string) => Record<string, string>;
   urlAppendHashParams: (url: string, addHash: string) => string;
   sessionStorageSet: (key: string, value: string) => boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sessionStorageGet: (key: string) => any | null;
 }

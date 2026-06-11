@@ -11,13 +11,13 @@ export interface SettingsButton {
    * Bot API 7.0+ A method that sets the press event handler for the Settings item in the context menu. An alias for Telegram.WebApp.onEvent('settingsButtonClicked', callback)
    * @param callback
    */
-  onClick: (callback: Function) => SettingsButton;
+  onClick: (callback: (() => void) | Function) => SettingsButton;
 
   /**
    * Bot API 7.0+ A method that removes the press event handler from the Settings item in the context menu. An alias for Telegram.WebApp.offEvent('settingsButtonClicked', callback)
    * @param callback
    */
-  offClick: (callback: Function) => SettingsButton;
+  offClick: (callback: (() => void) | Function) => SettingsButton;
 
   /**
    * Bot API 7.0+ A method to make the Settings item in the context menu visible.

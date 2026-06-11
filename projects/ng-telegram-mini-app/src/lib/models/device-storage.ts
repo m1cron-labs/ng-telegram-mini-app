@@ -15,7 +15,7 @@ export interface DeviceStorage {
    * @param value
    * @param callback
    */
-  setItem: (key: string, value: string, callback?: Function) => DeviceStorage;
+  setItem: (key: string, value: string, callback?: ((error: Error | null, stored?: boolean) => void) | Function) => DeviceStorage;
 
   /**
    * Bot API 9.0+
@@ -25,7 +25,7 @@ export interface DeviceStorage {
    * @param key
    * @param callback
    */
-  getItem: (key: string, callback: Function) => DeviceStorage;
+  getItem: (key: string, callback: ((error: Error | null, value?: string | null) => void) | Function) => DeviceStorage;
 
   /**
    * Bot API 9.0+
@@ -36,7 +36,7 @@ export interface DeviceStorage {
    * @param key
    * @param callback
    */
-  removeItem: (key: string, callback?: Function) => DeviceStorage;
+  removeItem: (key: string, callback?: ((error: Error | null, removed?: boolean) => void) | Function) => DeviceStorage;
 
   /**
    * Bot API 9.0+
@@ -46,5 +46,5 @@ export interface DeviceStorage {
    * In case of success, the first argument will be null and the second argument will be a boolean indicating whether all values were removed.
    * @param callback
    */
-  clear: (callback?: Function) => DeviceStorage;
+  clear: (callback?: ((error: Error | null, cleared?: boolean) => void) | Function) => DeviceStorage;
 }

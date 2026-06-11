@@ -18,33 +18,33 @@ export class TelegramStorage {
 
   getItem(key: string): Promise<string | undefined> {
     return new Promise((resolve, reject) =>
-      this.storage.getItem(key, (err: Error | null, data: string | undefined) => {
+      this.storage.getItem(key, (err: Error | null, data?: string | null) => {
         if (err) {
           return reject(err);
         }
-        resolve(data);
+        resolve(data ?? undefined);
       }),
     );
   }
 
   getItems(keys: string[]): Promise<Record<string, string>> {
     return new Promise((resolve, reject) =>
-      this.storage.getItems(keys, (err: Error | null, data: Record<string, string>) => {
+      this.storage.getItems(keys, (err: Error | null, data?: Record<string, string>) => {
         if (err) {
           return reject(err);
         }
-        resolve(data);
+        resolve(data ?? {});
       }),
     );
   }
 
   getKeys(): Promise<string[]> {
     return new Promise((resolve, reject) =>
-      this.storage.getKeys((err: Error | null, keys: string[]) => {
+      this.storage.getKeys((err: Error | null, keys?: string[]) => {
         if (err) {
           return reject(err);
         }
-        resolve(keys);
+        resolve(keys ?? []);
       }),
     );
   }

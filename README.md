@@ -53,3 +53,39 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 }
 ```
+
+## Typed events (TelegramEvents)
+
+`WebApp.onEvent` now infers the handler payload type from the event name, and enum-typed fields accept plain string literals alongside enum members (e.g. `setParams({ position: 'top' })`).
+
+For a reactive API, inject the `TelegramEvents` service — it bridges `WebApp.onEvent` / `offEvent` into typed RxJS Observables (requires the `rxjs` peer dependency, which every Angular application already has):
+
+```typescript
+import { Component } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { TelegramEvents } from '@m1cron-labs/ng-telegram-mini-app';
+
+@Component({
+  selector: 'app-root',
+  template: `<!-- Your template here -->`
+})
+export class AppComponent {
+  private readonly events = inject(TelegramEvents);
+
+  constructor() {
+    this.events.on('viewportChanged')
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ isStateStable }) => {
+        // isStateStable is typed as boolean
+      });
+
+    this.events.on('invoiceClosed')
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ url, status }) => {
+        // status is typed as 'paid' | 'cancelled' | 'failed' | 'pending'
+      });
+  }
+}
+```
+
+Unsubscribing removes the underlying handler via `WebApp.offEvent` automatically.

@@ -1,6 +1,16 @@
 import { NotificationType } from './enums/notification.type';
 
 /**
+ * Style of an impact haptic feedback.
+ * - light, indicates a collision between small or lightweight UI objects,
+ * - medium, indicates a collision between medium-sized or medium-weight UI objects,
+ * - heavy, indicates a collision between large or heavyweight UI objects,
+ * - rigid, indicates a collision between hard or inflexible UI objects,
+ * - soft, indicates a collision between soft or flexible UI objects.
+ */
+export type HapticImpactStyle = 'light' | 'medium' | 'heavy' | 'rigid' | 'soft';
+
+/**
  * This object controls haptic feedback.
  */
 export interface HapticFeedback {
@@ -13,7 +23,7 @@ export interface HapticFeedback {
    * - soft, indicates a collision between soft or flexible UI objects.
    * @param style
    */
-  impactOccurred: (style: string) => HapticFeedback;
+  impactOccurred: (style: HapticImpactStyle) => HapticFeedback;
 
   /**
    * Bot API 6.1+ A method tells that a task or action has succeeded, failed, or produced a warning. The Telegram app may play the appropriate haptics based on type value passed. Type can be one of these values:
@@ -22,7 +32,7 @@ export interface HapticFeedback {
    * - warning, indicates that a task or action produced a warning.
    * @param type
    */
-  notificationOccurred: (type: NotificationType) => HapticFeedback;
+  notificationOccurred: (type: `${NotificationType}`) => HapticFeedback;
 
   /**
    * Bot API 6.1+ A method tells that the user has changed a selection. The Telegram app may play the appropriate haptics.

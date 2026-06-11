@@ -22,7 +22,7 @@ export interface WebViewProxy {
    * @param eventType The type of the event.
    * @param eventData The data associated with the event.
    */
-  postEvent: (eventType: WebViewEventType, eventData: WebViewEventUnion['eventData']) => void;
+  postEvent: <T extends WebViewEventType>(eventType: T, eventData: WebViewEventDataMap[T]) => void;
 }
 
 /**
@@ -135,7 +135,7 @@ export interface WebAppInvokeCustomMethodEvent extends WebViewEvent {
     /**
      * An object containing the parameters of the method call
      */
-    params: Record<string, any>;
+    params: Record<string, unknown>;
   };
 }
 
@@ -414,7 +414,7 @@ export interface PaymentFormSubmitEvent extends WebViewEvent {
     /**
      * A service-specific JSON object with information about the payment credentials provided by the user to the payment system.
      */
-    credentials: Record<string, any>;
+    credentials: Record<string, unknown>;
   };
 }
 
@@ -497,3 +497,10 @@ export type WebViewEventUnion =
   | GameOverEvent
   | GameLoadedEvent
   | ResizeFrameEvent;
+
+/**
+ * Maps each WebView protocol event type to its eventData payload, derived from WebViewEventUnion.
+ */
+export type WebViewEventDataMap = {
+  [E in WebViewEventUnion as E['eventType']]: E['eventData'];
+};

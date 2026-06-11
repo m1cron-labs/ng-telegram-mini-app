@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { IS_IFRAME, TelegramWebviewProxy, WINDOW } from './token';
-import { WebViewEventType, WebViewEventUnion } from './models/web-events';
+import { WebViewEventDataMap, WebViewEventType } from './models/web-events';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class EventsAPI {
     return this.#trustedTarget;
   }
 
-  postEvent(eventType: WebViewEventType, eventData: WebViewEventUnion['eventData']) {
+  postEvent<T extends WebViewEventType>(eventType: T, eventData: WebViewEventDataMap[T]) {
     if (this.webviewProxy != null) {
       this.webviewProxy.postEvent(eventType, eventData);
     } else if (this.window.external?.notify) {

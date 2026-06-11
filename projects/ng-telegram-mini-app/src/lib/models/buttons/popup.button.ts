@@ -19,7 +19,7 @@ export interface PopupButton {
    * - cancel, a button with the localized text “Cancel”,
    * - destructive, a button with a style that indicates a destructive action (e.g. “Remove”, “Delete”, etc.).
    */
-  type?: ButtonType;
+  type?: `${ButtonType}`;
 
   /**
    * 0-64 characters

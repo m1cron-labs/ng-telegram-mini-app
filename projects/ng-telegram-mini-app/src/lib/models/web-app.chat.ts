@@ -12,7 +12,7 @@ export interface WebAppChat {
   /**
    * Type of chat, can be either “group”, “supergroup” or “channel”
    */
-  type: ChatType;
+  type: `${ChatType}`;
 
   /**
    * Title of the chat

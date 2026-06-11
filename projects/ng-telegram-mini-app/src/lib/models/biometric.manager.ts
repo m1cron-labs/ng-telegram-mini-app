@@ -22,7 +22,7 @@ export interface BiometricManager {
    * - face, face-based biometrics,
    * - unknown, biometrics of an unknown type.
    */
-  biometricType: BiometricType;
+  biometricType: `${BiometricType}`;
 
   /**
    * Bot API 7.2+ Shows whether permission to use biometrics has been requested.
@@ -48,28 +48,28 @@ export interface BiometricManager {
    * Bot API 7.2+ A method that initializes the BiometricManager object. It should be called before the object's first use. If an optional callback parameter was passed, the callback function will be called when the object is initialized.
    * @param callback
    */
-  init: (callback?: Function) => BiometricManager;
+  init: (callback?: (() => void) | Function) => BiometricManager;
 
   /**
    * Bot API 7.2+ A method that requests permission to use biometrics according to the params argument of type BiometricRequestAccessParams. If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the user granted access.
    * @param params
    * @param callback
    */
-  requestAccess: (params: BiometricRequestAccessParams, callback?: Function) => BiometricManager;
+  requestAccess: (params: BiometricRequestAccessParams, callback?: ((granted: boolean) => void) | Function) => BiometricManager;
 
   /**
    * Bot API 7.2+ A method that authenticates the user using biometrics according to the params argument of type BiometricAuthenticateParams. If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the user authenticated successfully. If so, the second argument will be a biometric token.
    * @param params
    * @param callback
    */
-  authenticate: (params: BiometricAuthenticateParams, callback?: Function) => BiometricManager;
+  authenticate: (params: BiometricAuthenticateParams, callback?: ((success: boolean, biometricToken?: string) => void) | Function) => BiometricManager;
 
   /**
    * Bot API 7.2+ A method that updates the biometric token in secure storage on the device. To remove the token, pass an empty string. If an optional callback parameter was passed, the callback function will be called and the first argument will be a boolean indicating whether the token was updated.
    * @param token
    * @param callback
    */
-  updateBiometricToken: (token: string, callback?: Function) => BiometricManager;
+  updateBiometricToken: (token: string, callback?: ((updated: boolean) => void) | Function) => BiometricManager;
 
   /**
    * Bot API 7.2+ A method that opens the biometric access settings for bots. Useful when you need to request biometrics access to users who haven't granted it yet.
